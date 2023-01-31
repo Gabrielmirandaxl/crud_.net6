@@ -24,7 +24,7 @@ namespace test_crud.Repository
 
     public void AtualizarUsuario(Usuario usuario)
     {
-      throw new NotImplementedException();
+      this.context.Update(usuario);
     }
 
     public async Task<IEnumerable<Usuario>> BuscarUsuarios()

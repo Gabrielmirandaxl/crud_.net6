@@ -45,6 +45,28 @@ namespace test_crud.Controllers
 
     }
 
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Put(int id, Usuario usuario)
+    {
+
+      var user = await this.repository.BuscaUsuario(id);
+
+      if (user == null) return NotFound("usuário não encontrado");
+
+      user.Name = usuario.Name ?? user.Name;
+      user.Email = usuario.Email ?? user.Email;
+      user.Telefone = usuario.Telefone ?? user.Telefone;
+      user.Cpf = usuario.Cpf ?? user.Cpf;
+      user.RegistrationDate = DateTime.Now;
+
+      this.repository.AtualizarUsuario(user);
+
+      return await this.repository.SavesChangesAsync()
+             ? Ok("Usuário atualizado com sucesso")
+             : BadRequest("Erro ao atualizar o usuário");
+
+    }
+
 
   }
 }
