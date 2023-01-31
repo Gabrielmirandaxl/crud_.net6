@@ -39,7 +39,7 @@ namespace test_crud.Repository
 
     public void RemoverUsuario(Usuario usuario)
     {
-      throw new NotImplementedException();
+      this.context.Remove(usuario);
     }
 
     public async Task<bool> SavesChangesAsync()

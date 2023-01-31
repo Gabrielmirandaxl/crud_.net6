@@ -67,6 +67,23 @@ namespace test_crud.Controllers
 
     }
 
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+
+      var user = await this.repository.BuscaUsuario(id);
+
+      if (user == null) return NotFound("Usuário não encontrado");
+
+      this.repository.RemoverUsuario(user);
+
+      return await this.repository.SavesChangesAsync()
+      ? Ok("Usuário deletado com sucesso")
+      : BadRequest("Erro ao deletar o usuário");
+
+
+    }
+
 
   }
 }
