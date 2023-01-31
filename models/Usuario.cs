@@ -10,5 +10,6 @@ namespace test_crud.models
     public string? Cpf { get; set; }
     public DateTime RegistrationDate { get; set; }
 
+
   }
 }

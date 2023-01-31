@@ -1,6 +1,6 @@
 using test_crud.Data;
 using Microsoft.EntityFrameworkCore;
-
+using test_crud.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +20,8 @@ builder.Services.AddDbContext<UserContext>(options =>
   ServerVersion.AutoDetect(mysqlConntection));
 
 });
+
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 var app = builder.Build();
 

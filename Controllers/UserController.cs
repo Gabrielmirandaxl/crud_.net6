@@ -1,6 +1,7 @@
 
 using Microsoft.AspNetCore.Mvc;
 using test_crud.models;
+using test_crud.Repository;
 
 namespace test_crud.Controllers
 {
@@ -9,25 +10,39 @@ namespace test_crud.Controllers
   public class UserController : ControllerBase
   {
 
-    private static List<Usuario> Users()
+    private readonly IUserRepository repository;
+
+    public UserController(IUserRepository repository)
     {
-      return new List<Usuario>{
-         new Usuario{Id = 1, Name = "gabriel", Email = "gabriel@gmail.com", Telefone = "984021703", Cpf = "23234523412", RegistrationDate = new DateTime(2023, 01, 31)}
-  };
+      this.repository = repository;
     }
-
-    [HttpGet]
-    public IActionResult Get() => Ok(Users());
-
-
 
 
     [HttpPost]
-    public IActionResult Post(Usuario usuario)
+    public async Task<IActionResult> Post(Usuario usuario)
     {
-      var usuarios = Users();
-      usuarios.Add(usuario);
-      return Ok(usuarios);
+      usuario.RegistrationDate = DateTime.Now;
+      this.repository.AdicionandoUsuario(usuario);
+      Console.WriteLine(usuario.Cpf);
+      return await this.repository.SavesChangesAsync()
+      ? Ok("Usuário criado")
+      : BadRequest("Erro ao salvar o suário");
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Get()
+    {
+      return Ok(await this.repository.BuscarUsuarios());
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById(int id)
+    {
+
+      var user = await this.repository.BuscaUsuario(id);
+
+      return user != null ? Ok(user) : NotFound("Nenhum usuário encontrado");
+
     }
 
 
