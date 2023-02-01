@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using test_crud.models;
 using test_crud.Repository;
 
+
 namespace test_crud.Controllers
 {
   [ApiController]
@@ -21,9 +22,11 @@ namespace test_crud.Controllers
     [HttpPost]
     public async Task<IActionResult> Post(Usuario usuario)
     {
+
+
       usuario.RegistrationDate = DateTime.Now;
       this.repository.AdicionandoUsuario(usuario);
-      Console.WriteLine(usuario.Cpf);
+
       return await this.repository.SavesChangesAsync()
       ? Ok("Usuário criado")
       : BadRequest("Erro ao salvar o suário");
