@@ -2,6 +2,7 @@
 
 using Microsoft.EntityFrameworkCore;
 using test_crud.Data;
+using test_crud.Dtos;
 using test_crud.libs;
 using test_crud.models;
 
@@ -29,9 +30,11 @@ namespace test_crud.Repository
       this.context.Update(usuario);
     }
 
-    public async Task<IEnumerable<Usuario>> BuscarUsuarios()
+    public async Task<IEnumerable<UsuarioDto>> BuscarUsuarios()
     {
-      return await this.context.Usuarios.ToListAsync();
+      return await this.context.Usuarios
+      .Select(x => new UsuarioDto { Id = x.Id, Name = x.Name, Email = x.Email, Telefone = x.Telefone })
+      .ToListAsync();
     }
 
     public async Task<Usuario> BuscaUsuario(int id)

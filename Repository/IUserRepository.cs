@@ -1,4 +1,5 @@
 
+using test_crud.Dtos;
 using test_crud.models;
 
 namespace test_crud.Repository
@@ -6,7 +7,7 @@ namespace test_crud.Repository
   public interface IUserRepository
   {
 
-    Task<IEnumerable<Usuario>> BuscarUsuarios();
+    Task<IEnumerable<UsuarioDto>> BuscarUsuarios();
     Task<Usuario> BuscaUsuario(int id);
     void AdicionandoUsuario(Usuario usuario);
     void AtualizarUsuario(Usuario usuario);

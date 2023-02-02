@@ -1,5 +1,5 @@
-
 using Microsoft.AspNetCore.Mvc;
+using test_crud.Dtos;
 using test_crud.models;
 using test_crud.Repository;
 
@@ -35,7 +35,13 @@ namespace test_crud.Controllers
     [HttpGet]
     public async Task<IActionResult> Get()
     {
-      return Ok(await this.repository.BuscarUsuarios());
+
+      var usuarios = await this.repository.BuscarUsuarios();
+
+      return Ok(usuarios);
+
+
+
     }
 
     [HttpGet("{id}")]
@@ -44,7 +50,17 @@ namespace test_crud.Controllers
 
       var user = await this.repository.BuscaUsuario(id);
 
-      return user != null ? Ok(user) : NotFound("Nenhum usuário encontrado");
+      var userdetails = new UsuarioDetalhesDto
+      {
+        Id = user.Id,
+        Name = user.Name,
+        Email = user.Email,
+        Telefone = user.Telefone,
+        Cpf = user.Cpf,
+        RegistrationDate = user.RegistrationDate
+      };
+
+      return user != null ? Ok(userdetails) : NotFound("Nenhum usuário encontrado");
 
     }
 
