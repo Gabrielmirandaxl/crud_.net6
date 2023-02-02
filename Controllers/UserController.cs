@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using test_crud.Dtos;
 using test_crud.models;
@@ -12,11 +13,15 @@ namespace test_crud.Controllers
   {
 
     private readonly IUserRepository repository;
+    private readonly IMapper mapper;
 
-    public UserController(IUserRepository repository)
+    public UserController(IUserRepository repository, IMapper mapper)
     {
       this.repository = repository;
+      this.mapper = mapper;
     }
+
+
 
 
     [HttpPost]
@@ -39,9 +44,6 @@ namespace test_crud.Controllers
       var usuarios = await this.repository.BuscarUsuarios();
 
       return Ok(usuarios);
-
-
-
     }
 
     [HttpGet("{id}")]
@@ -50,15 +52,7 @@ namespace test_crud.Controllers
 
       var user = await this.repository.BuscaUsuario(id);
 
-      var userdetails = new UsuarioDetalhesDto
-      {
-        Id = user.Id,
-        Name = user.Name,
-        Email = user.Email,
-        Telefone = user.Telefone,
-        Cpf = user.Cpf,
-        RegistrationDate = user.RegistrationDate
-      };
+      var userdetails = mapper.Map<UsuarioDetalhesDto>(user);
 
       return user != null ? Ok(userdetails) : NotFound("Nenhum usuário encontrado");
 

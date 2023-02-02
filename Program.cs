@@ -1,4 +1,5 @@
 
+using System.Collections.Immutable;
 using Microsoft.EntityFrameworkCore;
 using test_crud.Data;
 using test_crud.Middlewares;
@@ -27,7 +28,7 @@ builder.Services.AddDbContext<UserContext>(options =>
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
-
+builder.Services.AddAutoMapper(typeof(Program));
 
 
 var app = builder.Build();

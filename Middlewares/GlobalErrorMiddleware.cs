@@ -27,7 +27,6 @@ public class GlobalErrorMiddleware
   private static Task HandleExceptionAsync(HttpContext httpContext, Exception exception)
   {
 
-
     var response = JsonSerializer.Serialize(new { exception.Message });
     httpContext.Response.ContentType = "application/json";
     httpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
