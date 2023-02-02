@@ -2,7 +2,7 @@
 
 using Microsoft.EntityFrameworkCore;
 using test_crud.Data;
-using test_crud.Libs;
+using test_crud.libs;
 using test_crud.models;
 
 namespace test_crud.Repository
@@ -20,7 +20,6 @@ namespace test_crud.Repository
 
     public void AdicionandoUsuario(Usuario usuario)
     {
-
       ValidationUser.Validation(usuario);
       this.context.Add(usuario);
     }

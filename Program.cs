@@ -1,8 +1,12 @@
-using test_crud.Data;
+
 using Microsoft.EntityFrameworkCore;
+using test_crud.Data;
+using test_crud.Middlewares;
 using test_crud.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
+
+
 
 // Add services to the container.
 
@@ -23,14 +27,21 @@ builder.Services.AddDbContext<UserContext>(options =>
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
+
+
+
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
   app.UseSwagger();
   app.UseSwaggerUI();
+
 }
+
+app.UseMiddleware(typeof(GlobalErrorMiddleware));
 
 app.UseHttpsRedirection();
 

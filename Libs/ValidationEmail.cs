@@ -1,17 +1,16 @@
 using System.Text.RegularExpressions;
+namespace test_crud.libs;
 
-namespace test_crud.Libs
+public static class ValidationEmail
 {
-  public static class ValidationEmail
+  public static bool validEmail(string email)
   {
-    public static bool ValidEmail(string email)
-    {
 
-      string pattern = @"^[\w!#$%&'*+\-/=?\^_`{|}~]+(\.[\w!#$%&'*+\-/=?\^_`{|}~]+)*" +
-                       "@" +
-                       @"((([\-\w]+\.)+[a-zA-Z]{2,4})|(([0-9]{1,3}\.){3}[0-9]{1,3}))$";
+    string pattern = @"^(?!\.)(""([^""\r\\]|\\[""\r\\])*""|"
+       + @"([-a-z0-9!#$%&'*+/=?^_`{|}~]|(?<!\.)\.)*)(?<!\.)"
+       + @"@[a-z0-9][\w\.-]*[a-z0-9]\.[a-z][a-z\.]*[a-z]$";
 
-      return Regex.IsMatch(email, pattern);
-    }
+
+    return Regex.IsMatch(email, pattern, RegexOptions.IgnoreCase);
   }
 }
